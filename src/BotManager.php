@@ -16,14 +16,12 @@ class BotManager
 
     /**
      * Array of bot instances.
-     *
      * @var array
      */
     protected $bots = [];
 
     /**
      * Default bot name.
-     *
      * @var string|null
      */
     protected $default;
@@ -46,11 +44,9 @@ class BotManager
 
     /**
      * Get bot by name.
-     *
-     * @param  string  $name bot name
-     * @return TeleBot
-     *
+     * @param  string           $name bot name
      * @throws TeleBotException
+     * @return TeleBot
      */
     public function bot(string $name = null)
     {
@@ -83,12 +79,11 @@ class BotManager
 
     /**
      * Add bot to BotManager.
-     *
-     * @param  string  $name bot name
-     * @param  array|string|TeleBot  $bot  TeleBot instance or bot config
+     * @param  string               $name bot name
+     * @param  array|string|TeleBot $bot  TeleBot instance or bot config
      * @return TeleBot              added bot
      */
-    public function add(string $name, array|string|TeleBot $bot)
+    public function add(string $name, $bot)
     {
         if ($bot instanceof TeleBot) {
             $this->bots[$name] = $bot;
@@ -101,8 +96,7 @@ class BotManager
 
     /**
      * Delete bot from BotManager.
-     *
-     * @param  string  $name bot name
+     * @param string $name bot name
      */
     public function delete(string $name)
     {
@@ -114,7 +108,6 @@ class BotManager
 
     /**
      * Set default bot name.
-     *
      * @param  string  $name bot name
      * @return TeleBot default bot
      */
