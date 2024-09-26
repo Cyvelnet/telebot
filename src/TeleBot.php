@@ -19,51 +19,37 @@ class TeleBot
 
     /**
      * Actual bot config.
-     *
      * @var array
      */
     protected $config = [];
 
     /**
      * Guzzle HTTP client.
-     *
      * @var Client
      */
     protected $client;
 
     /**
      * Kernel for handling incoming updates.
-     *
      * @var Kernel
      */
     protected $kernel;
 
     /**
      * Async trigger.
-     *
      * @var bool
      */
     protected $async;
 
     /**
      * Exception trigger.
-     *
      * @var bool
      */
     protected $exceptions;
 
     /**
-     * Fake trigger.
-     *
-     * @var bool
-     */
-    protected $fake;
-
-    /**
      * Create new instance of Telegram bot.
-     *
-     * @param  array|string  $config Bot config. Path telegram bot API token as string, or array of parameters
-     *
+     * @param  array|string     $config Bot config. Path telegram bot API token as string, or array of parameters
      * @throws TeleBotException
      */
     public function __construct($config)
@@ -76,15 +62,14 @@ class TeleBot
         }
 
         $this->config = [
-            'token' => $config['token'],
-            'name' => $config['name'] ?? null,
+            'token'      => $config['token'],
+            'name'       => $config['name'] ?? null,
             'exceptions' => $config['exceptions'] ?? true,
-            'async' => $config['async'] ?? false,
-            'storage' => $config['storage'] ?? \WeStacks\TeleBot\Storage\JsonStorage::class,
-            'api_url' => $config['api_url'] ?? 'https://api.telegram.org/bot{TOKEN}/{METHOD}',
-            'webhook' => $config['webhook'] ?? [],
-            'poll' => $config['poll'] ?? [],
-            'handlers' => $config['handlers'] ?? null,
+            'async'      => $config['async'] ?? false,
+            'api_url'    => $config['api_url'] ?? 'https://api.telegram.org/bot{TOKEN}/{METHOD}',
+            'webhook'    => $config['webhook'] ?? [],
+            'poll'       => $config['poll'] ?? [],
+            'handlers'   => $config['handlers'] ?? null,
         ];
 
         $this->client = new Client([
@@ -122,21 +107,20 @@ class TeleBot
 
     /**
      * Get bot config.
-     *
      * @return mixed
      */
-    public function config(string $value = null, $default = null)
+    public function config($value = null)
     {
         if ($value === null) {
             return $this->config;
         }
 
-        return $this->config[$value] ?? $default;
+        return $this->config[$value] ?? null;
     }
 
     /**
      * Call next method asynchronously (bot method will return guzzle promise).
-     *
+     * @param  bool $async
      * @return self
      */
     public function async(bool $async = true)
@@ -148,8 +132,7 @@ class TeleBot
 
     /**
      * Call next method fake.
-     *
-     * @param  bool  $async
+     * @param  bool $async
      * @return self
      */
     public function fake(bool $fake = true)
@@ -161,7 +144,7 @@ class TeleBot
 
     /**
      * Throw exceptions on next method (bot method will throw `TeleBotException` on request error).
-     *
+     * @param  bool $exceptions
      * @return self
      */
     public function exceptions(bool $exceptions = true)

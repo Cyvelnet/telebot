@@ -11,7 +11,6 @@ class Kernel
 {
     /**
      * Array of update handlers.
-     *
      * @var string[]|callable[]
      */
     protected $handlers = [];
@@ -23,14 +22,13 @@ class Kernel
 
     /**
      * Handles updates using registered handlers.
-     *
      * @return mixed
      */
     public function run(TeleBot $bot, Update $update)
     {
         $runner = $this->runner($bot);
 
-        if (! $runner->valid()) {
+        if (!$runner->valid()) {
             return;
         }
 
@@ -76,17 +74,16 @@ class Kernel
         }
 
         return function () {
+            return;
         };
     }
 
     /**
      * Add new update handler(s).
-     *
-     * @param  array|Closure|string  $handler string that represents `UpdateHandler` subclass resolution or closure function. You also may give an array to add multiple handlers.
-     *
+     * @param  array|Closure|string $handler string that represents `UpdateHandler` subclass resolution or closure function. You also may give an array to add multiple handlers.
      * @throws TeleBotException
      */
-    public function add(array|\Closure|string $handler)
+    public function add($handler)
     {
         if (is_array($handler)) {
             foreach ($handler as $sub) {
