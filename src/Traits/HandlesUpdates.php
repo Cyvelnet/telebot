@@ -9,7 +9,6 @@ trait HandlesUpdates
 {
     /**
      * Kernel for handling incoming updates.
-     *
      * @var Kernel
      */
     protected $kernel;
@@ -17,7 +16,8 @@ trait HandlesUpdates
     /**
      * Handle given update.
      *
-     * @param  Update  $update Telegram update object
+     * @param Update $update Telegram update object
+     *
      * @return mixed
      */
     public function handleUpdate(Update $update)
@@ -48,9 +48,9 @@ trait HandlesUpdates
     /**
      * Add new update handler(s) to the bot instance.
      *
-     * @param  array|Closure|string  $handler string that represents `UpdateHandler` subclass resolution or closure function. You also may give an array to add multiple handlers.
+     * @param array|Closure|string $handler string that represents `UpdateHandler` subclass resolution or closure function. You also may give an array to add multiple handlers.
      */
-    public function addHandler(array|\Closure|string $handler)
+    public function addHandler($handler)
     {
         $this->kernel->add($handler);
     }
@@ -60,7 +60,7 @@ trait HandlesUpdates
      */
     public function clearHandlers()
     {
-        $Kernel = $this->kernel::class;
+        $Kernel = get_class($this->kernel);
         $this->kernel = new $Kernel;
     }
 }

@@ -71,8 +71,9 @@ abstract class TelegramMethod
     private function url()
     {
         $url = str_replace('{TOKEN}', $this->token, $this->url);
+        $url = str_replace('{METHOD}', $this->method, $url);
 
-        return str_replace('{METHOD}', $this->method, $url);
+        return $url;
     }
 
     /**

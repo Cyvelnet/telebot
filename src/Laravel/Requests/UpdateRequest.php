@@ -28,27 +28,20 @@ class UpdateRequest extends FormRequest
 
     public function authorize()
     {
-        return  $this->isMethod('post') &&
-                $this->isJson() &&
-                $this->validToken() &&
-                $this->validSecret();
-    }
-
-    private function validToken()
-    {
         $bot = $this->route('bot');
         $token = $this->route('token');
 
         $config = config("telebot.bots.$bot");
         $realToken = $config['token'] ?? $config;
 
-        return $token === $realToken;
+        return  $this->isMethod('post') &&
+                $this->isJson() &&
+                $this->validSecret($bot) &&
+                $token === $realToken;
     }
 
-    private function validSecret()
+    private function validSecret(string $bot)
     {
-        $bot = $this->route('bot');
-
         $secret = $this->header('X-Telegram-Bot-Api-Secret-Token');
         $token = config("telebot.bots.$bot.webhook.secret_token");
 
@@ -57,17 +50,8 @@ class UpdateRequest extends FormRequest
 
     protected function onlyOnePresent(string $type)
     {
-        $types = implode(',', array_filter($this->types, fn ($value) => $value !== $type));
-
+        $types = implode(",", array_filter($this->types, fn ($value) => $value !== $type));
         return "required_without_all:$types|prohibits:$types";
-    }
-
-    protected function prepareForValidation()
-    {
-        // Crutch to prevent any data modifications from Laravel
-        // For now, Laravel not allowing to disable global middleware per request,
-        // so we can't ignore middlewares like: ConvertEmptyStringsToNull, TrimStrings etc.
-        $this->merge(json_decode($this->getContent(), true));
     }
 
     public function rules()
@@ -83,7 +67,6 @@ class UpdateRequest extends FormRequest
         if (empty($this->update)) {
             $this->update = new Update($this->validated());
         }
-
         return $this->update;
     }
 }

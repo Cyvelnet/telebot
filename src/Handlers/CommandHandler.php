@@ -22,25 +22,21 @@ abstract class CommandHandler extends UpdateHandler
      *
      * @var string
      */
-    protected static $description;
+    protected static $description = null;
 
     /**
      * Get array of Telegram` BotCommand` objects for each command alias.
      *
      * @return BotCommand[]
      */
-    final public static function getBotCommand(?string $locale = null)
+    final public static function getBotCommand()
     {
-        $description = rescue(
-            fn () => trans(static::$description, locale: $locale),
-            static::$description, false
-        );
-
-        return array_map(
-            function (string $command) use ($description) {
-                return new BotCommand(compact('command', 'description'));
-            }, static::$aliases
-        );
+        return array_map(function ($name) {
+            return new BotCommand([
+                'command'     => $name,
+                'description' => static::$description,
+            ]);
+        }, static::$aliases);
     }
 
     public function trigger()

@@ -4,10 +4,9 @@
 
 <p align="center">
 <a href="https://packagist.org/packages/westacks/telebot"><img src="https://poser.pugx.org/westacks/telebot/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://core.telegram.org/bots/api"><img src="https://img.shields.io/badge/Bot%20API-6.7-blue" alt="Bot API Version"></a>
+<a href="https://core.telegram.org/bots/api"><img src="https://img.shields.io/badge/Bot%20API-6.1-blue" alt="Bot API Version"></a>
 <a href="https://packagist.org/packages/westacks/telebot"><img src="https://poser.pugx.org/westacks/telebot/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/westacks/telebot"><img src="https://poser.pugx.org/westacks/telebot/license.svg" alt="License"></a>
-<a href="https://github.com/westacks/telebot/actions/workflows/main.yml"><img src="https://github.com/westacks/telebot/actions/workflows/main.yml/badge.svg" alt="PHPUnit"></a>
 </p>
 
 TeleBot is a PHP library for telegram bots development. Rich Laravel support out of the box. Has an easy, clean, and extendable way to handle telegram Updates.

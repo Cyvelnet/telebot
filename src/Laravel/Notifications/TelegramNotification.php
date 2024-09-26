@@ -26,13 +26,6 @@ use WeStacks\TeleBot\Traits\HasTelegramMethods;
  * @method static self declineChatJoinRequest(array $parameters = [])                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work and must have the can_invite_users administrator right. Returns True on success.
  * @method static self deleteChatPhoto(array $parameters = [])                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
  * @method static self deleteChatStickerSet(array $parameters = []) Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Use the field can_set_sticker_set optionally returned in [getChat](https://core.telegram.org/bots/api#getchat)                                                                                                                                                                                                                                                        requests to check if the bot can use this method. Returns True on success.
- * @method static self getForumTopicIconStickers() Use this method to get custom emoji stickers, which can be used as a forum topic icon by any user. Requires no parameters. Returns an Array of Sticker objects.
- * @method static self createForumTopic(array $parameters = []) Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights. Returns information about the created topic as a ForumTopic object.
- * @method static self editForumTopic(array $parameters = []) Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
- * @method static self closeForumTopic(array $parameters = []) Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
- * @method static self reopenForumTopic(array $parameters = []) Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic. Returns True on success.
- * @method static self deleteForumTopic(array $parameters = []) Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an administrator in the chat for this to work and must have the can_delete_messages administrator rights. Returns True on success.
- * @method static self unpinAllForumTopicMessages(array $parameters = []) Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
  * @method static self deleteMessage(array $parameters = [])                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 Use this method to delete a message, including service messages, with the following limitations:
  * @method static self deleteMyCommands(array $parameters = []) Use this method to delete the list of the bot's commands for the given scope and user language. After deletion, [higher level commands](https://core.telegram.org/bots/api#determining-list-of-commands)                                                                                                                                                                                                                                                                                                                                                     will be shown to affected users. Returns True on success.
  * @method static self deleteStickerFromSet(array $parameters = [])                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Use this method to delete a sticker from a set created by the bot. Returns True on success.
@@ -105,7 +98,7 @@ use WeStacks\TeleBot\Traits\HasTelegramMethods;
  * @method static self unpinChatMessage(array $parameters = [])                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator right in a channel. Returns True on success.
  * @method static self uploadStickerFile(array $parameters = []) Use this method to upload a .PNG file with a sticker for later use in createNewStickerSet and addStickerToSet methods (can be used multiple times). Returns the uploaded [File](https://core.telegram.org/bots/api#file)                                                                                                                                                                                                                                                                                                                                    on success.
  */
-class TelegramNotification implements JsonSerializable, \Stringable
+class TelegramNotification implements JsonSerializable
 {
     use HasTelegramMethods;
 
@@ -114,12 +107,12 @@ class TelegramNotification implements JsonSerializable, \Stringable
     /**
      * Create new notification instance.
      *
-     * @param  string|null  $data JSON data object representation
+     * @param string|null $data JSON data object representation
      */
     public function __construct(string $data = null)
     {
         $this->data = $data ? json_decode($data, true) : [
-            'bot' => null,
+            'bot'     => null,
             'actions' => [],
         ];
     }
@@ -136,7 +129,7 @@ class TelegramNotification implements JsonSerializable, \Stringable
         }
 
         $this->data['actions'][] = [
-            'method' => $method,
+            'method'    => $method,
             'arguments' => is_array($arguments[0]) ? $arguments[0] : [],
         ];
 
@@ -146,6 +139,7 @@ class TelegramNotification implements JsonSerializable, \Stringable
     /**
      * Set bot to send notification.
      *
+     * @param  string $bot
      * @return self
      */
     public function bot(string $bot)
@@ -161,8 +155,8 @@ class TelegramNotification implements JsonSerializable, \Stringable
         return $this->data;
     }
 
-    public function __toString(): string
+    public function __toString()
     {
-        return (string) json_encode($this->data);
+        return json_encode($this->data);
     }
 }
